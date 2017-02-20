@@ -14,12 +14,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import chat.rocket.android.R;
-import chat.rocket.android.helper.LogcatIfError;
+import chat.rocket.android.helper.LogIfError;
 import chat.rocket.android.layouthelper.chatroom.dialog.RoomUserAdapter;
 import chat.rocket.android.log.RCLog;
-import chat.rocket.android.model.SyncState;
-import chat.rocket.android.model.internal.GetUsersOfRoomsProcedure;
-import chat.rocket.android.realm_helper.RealmObjectObserver;
+import chat.rocket.core.SyncState;
+import chat.rocket.persistence.realm.models.internal.GetUsersOfRoomsProcedure;
+import chat.rocket.persistence.realm.RealmObjectObserver;
 import chat.rocket.android.service.ConnectivityManager;
 
 /**
@@ -92,7 +92,7 @@ public class UsersOfRoomDialogFragment extends AbstractChatRoomDialogFragment {
       ConnectivityManager.getInstance(getContext().getApplicationContext())
           .keepAliveServer();
       return task;
-    }).continueWith(new LogcatIfError());
+    }).continueWith(new LogIfError());
   }
 
   @Override

@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.trello.rxlifecycle.components.support.RxFragment;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 
 /**
  * Fragment base class for this Application.
@@ -14,9 +14,8 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 public abstract class AbstractFragment extends RxFragment {
   protected View rootView;
 
-  protected abstract
   @LayoutRes
-  int getLayout();
+  protected abstract int getLayout();
 
   protected abstract void onSetupView();
 

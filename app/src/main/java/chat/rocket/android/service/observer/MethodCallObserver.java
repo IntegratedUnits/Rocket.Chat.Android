@@ -7,10 +7,10 @@ import org.json.JSONObject;
 
 import java.util.List;
 import chat.rocket.android.helper.CheckSum;
-import chat.rocket.android.helper.LogcatIfError;
-import chat.rocket.android.model.SyncState;
-import chat.rocket.android.model.internal.MethodCall;
-import chat.rocket.android.realm_helper.RealmHelper;
+import chat.rocket.android.helper.LogIfError;
+import chat.rocket.core.SyncState;
+import chat.rocket.persistence.realm.models.internal.MethodCall;
+import chat.rocket.persistence.realm.RealmHelper;
 import chat.rocket.android.service.DDPClientRef;
 import chat.rocket.android_ddp.DDPClientCallback;
 
@@ -45,7 +45,7 @@ public class MethodCallObserver extends AbstractModelObserver<MethodCall> {
           .endGroup()
           .findAll().deleteAllFromRealm();
       return null;
-    }).continueWith(new LogcatIfError());
+    }).continueWith(new LogIfError());
   }
 
   @Override
@@ -120,6 +120,6 @@ public class MethodCallObserver extends AbstractModelObserver<MethodCall> {
         });
       }
       return task;
-    }).continueWith(new LogcatIfError());
+    }).continueWith(new LogIfError());
   }
 }

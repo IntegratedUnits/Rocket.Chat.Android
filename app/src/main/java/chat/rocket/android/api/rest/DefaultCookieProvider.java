@@ -3,10 +3,10 @@ package chat.rocket.android.api.rest;
 import android.content.Context;
 
 import chat.rocket.android.RocketChatCache;
-import chat.rocket.android.model.ddp.User;
-import chat.rocket.android.model.internal.Session;
-import chat.rocket.android.realm_helper.RealmHelper;
-import chat.rocket.android.realm_helper.RealmStore;
+import chat.rocket.persistence.realm.models.ddp.RealmUser;
+import chat.rocket.persistence.realm.models.internal.RealmSession;
+import chat.rocket.persistence.realm.RealmHelper;
+import chat.rocket.persistence.realm.RealmStore;
 
 public class DefaultCookieProvider implements CookieProvider {
 
@@ -33,12 +33,16 @@ public class DefaultCookieProvider implements CookieProvider {
       return "";
     }
 
-    final String userId = realmHelper.executeTransactionForRead(realm ->
-        User.queryCurrentUser(realm).findFirst()).getId();
-    final String token = realmHelper.executeTransactionForRead(realm ->
-        Session.queryDefaultSession(realm).findFirst()).getToken();
+    final RealmUser user = realmHelper.executeTransactionForRead(realm ->
+        RealmUser.queryCurrentUser(realm).findFirst());
+    final RealmSession session = realmHelper.executeTransactionForRead(realm ->
+        RealmSession.queryDefaultSession(realm).findFirst());
 
-    return "rc_uid=" + userId + ";rc_token=" + token;
+    if (user == null || session == null) {
+      return "";
+    }
+
+    return "rc_uid=" + user.getId() + ";rc_token=" + session.getToken();
   }
 
   private String getHostnameFromCache() {
